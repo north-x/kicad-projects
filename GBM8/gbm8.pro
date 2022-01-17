@@ -1,4 +1,4 @@
-update=30.08.2021 19:38:26
+update=17.01.2022 20:12:27
 version=1
 last_client=kicad
 [cvpcb]
@@ -16,16 +16,6 @@ version=1
 [eeschema]
 version=1
 LibDir=
-[schematic_editor]
-version=1
-PageLayoutDescrFile=../lib/oea_90deg.kicad_wks
-PlotDirectoryName=doc/
-SubpartIdSeparator=0
-SubpartFirstId=65
-NetFmtName=Pcbnew
-SpiceAjustPassiveValues=0
-LabSize=50
-ERC_TestSimilarLabels=1
 [pcbnew]
 version=1
 PageLayoutDescrFile=../lib/oea_90deg.kicad_wks
@@ -45,10 +35,11 @@ MinHoleToHole=0.25
 TrackWidth1=0.3048
 TrackWidth2=0.2032
 TrackWidth3=0.3048
-TrackWidth4=0.762
-TrackWidth5=1.016
-TrackWidth6=1.778
-TrackWidth7=2.032
+TrackWidth4=0.508
+TrackWidth5=0.762
+TrackWidth6=1.016
+TrackWidth7=1.778
+TrackWidth8=2.032
 ViaDiameter1=0.889
 ViaDrill1=0.635
 dPairWidth1=0.2032
@@ -267,3 +258,13 @@ uViaDrill=0.127
 dPairWidth=0.2032
 dPairGap=0.254
 dPairViaGap=0.25
+[schematic_editor]
+version=1
+PageLayoutDescrFile=../lib/oea_90deg.kicad_wks
+PlotDirectoryName=doc/
+SubpartIdSeparator=0
+SubpartFirstId=65
+NetFmtName=Pcbnew
+SpiceAjustPassiveValues=0
+LabSize=50
+ERC_TestSimilarLabels=1

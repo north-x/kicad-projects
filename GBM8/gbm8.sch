@@ -2268,7 +2268,9 @@ nur bestücken, falls\nU5 nicht 3.3 V
 Text Notes 8300 950  0    50   ~ 0
 bestücken,\nfalls U5 3.3 V
 Text Notes 8950 4000 0    50   ~ 0
-Ohne Isolation\nbestücken: JP2, JP3, JP5, JP6\nnicht bestücken: U4, U5, U6\nfalls ohne U3: JP4 und mit (JP4) markierte Widerstände\n\n5V Bestückung (U2, U5):\nmit (5V) markierte Widerstände\n\nSchraubklemmen:\nJP1 bestücken
+Ohne Isolation\nbestücken: JP2, JP3, JP5, JP6\nnicht bestücken: U4, U5, U6\nfalls ohne U3: mit (JP4) markierte Widerstände\n\n5V Bestückung (U2, U5):\nmit (5V) markierte Widerstände\n\nSchraubklemmen:\nJP1 bestücken
 Text Notes 1600 850  0    60   ~ 0
 Alternativbestückung\nSchraubklemmen 5mm\nAKL 349-02 / AKL 349-10
+Text Notes 7450 4050 0    50   ~ 0
+bestücken
 $EndSCHEMATC

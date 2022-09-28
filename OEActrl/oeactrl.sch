@@ -6,7 +6,7 @@ encoding utf-8
 Sheet 1 1
 Title "Prinzipschaltbild\\nAnlagesteuerung"
 Date "2022-08-04"
-Rev "0xyz -"
+Rev "0433 -"
 Comp "MV"
 Comment1 ""
 Comment2 ""

@@ -11,8 +11,12 @@
   --pad-color: #878787;
   --pad-hole-color: #CCCCCC;
   --pad-color-highlight: #D04040;
+  --pad-color-highlight-both: #D0D040;
+  --pad-color-highlight-marked: #44a344;
   --pin1-outline-color: #ffb629;
-  --pin1-outline-color-highlight: #b4ff03;
+  --pin1-outline-color-highlight: #ffb629;
+  --pin1-outline-color-highlight-both: #fcbb39;
+  --pin1-outline-color-highlight-marked: #fdbe41;
   --silkscreen-edge-color: #aa4;
   --silkscreen-polygon-color: #4aa;
   --silkscreen-text-color: #4aa;
@@ -25,7 +29,8 @@
   --zone-color-highlight: #d0404080;
 }
 
-html, body {
+html,
+body {
   margin: 0px;
   height: 100%;
   font-family: Verdana, sans-serif;
@@ -110,7 +115,7 @@ button#copy {
 }
 
 button#copy:active {
-    box-shadow: inset 0px 0px 5px #6c6c6c;
+  box-shadow: inset 0px 0px 5px #6c6c6c;
 }
 
 textarea.clipboard-temp {
@@ -197,9 +202,11 @@ canvas:active {
   table-layout: fixed;
   width: 100%;
   margin-top: 1px;
+  position: relative;
 }
 
-.bom th, .bom td {
+.bom th,
+.bom td {
   border: 1px solid black;
   padding: 5px;
   word-wrap: break-word;
@@ -207,7 +214,8 @@ canvas:active {
   position: relative;
 }
 
-.dark .bom th, .dark .bom td {
+.dark .bom th,
+.dark .bom td {
   border: 1px solid #777;
 }
 
@@ -237,11 +245,11 @@ canvas:active {
 }
 
 .bom tr.checked {
-  color: #aaa;
+  color: #1cb53d;
 }
 
 .dark .bom tr.checked {
-  color: #666;
+  color: #2cce54;
 }
 
 .bom tr {
@@ -249,22 +257,14 @@ canvas:active {
 }
 
 .bom .numCol {
-  width: 25px;
+  width: 30px;
 }
 
-.bom .Description {
-  width: 10%;
-}
-
-.bom .Part {
-  width: 10%;
-}
-
-.bom .Value {
+.bom .value {
   width: 15%;
 }
 
-.bom .Quantity {
+.bom .quantity {
   width: 65px;
 }
 
@@ -326,7 +326,8 @@ canvas:active {
   visibility: hidden;
 }
 
-.bom .bom-checkbox:hover:before, .bom .bom-checkbox:hover:after {
+.bom .bom-checkbox:hover:before,
+.bom .bom-checkbox:hover:after {
   visibility: visible;
   transition: visibility 0.2s linear 1s;
 }
@@ -340,7 +341,8 @@ canvas:active {
   background-color: inherit;
 }
 
-.split.split-horizontal, .gutter.gutter-horizontal {
+.split.split-horizontal,
+.gutter.gutter-horizontal {
   height: 100%;
   float: left;
 }
@@ -453,7 +455,23 @@ mark.highlight {
   background-repeat: no-repeat;
 }
 
-.dark .statsbtn, .dark .savebtn, .dark .menubtn, .dark .iobtn {
+.visbtn {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24'%3E%3Cpath fill='none' stroke='%23333' d='M2.5 4.5h5v15h-5zM9.5 4.5h5v15h-5zM16.5 4.5h5v15h-5z'/%3E%3C/svg%3E");
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 15px;
+}
+
+#vismenu-content {
+  left: 0px;
+  font-family: Verdana, sans-serif;
+}
+
+.dark .statsbtn,
+.dark .savebtn,
+.dark .menubtn,
+.dark .iobtn,
+.dark .visbtn {
   filter: invert(1);
 }
 
@@ -525,6 +543,9 @@ mark.highlight {
 }
 
 .menu-content {
+  font-size: 12pt !important;
+  text-align: left !important;
+  font-weight: normal !important;
   display: none;
   position: absolute;
   background-color: white;
@@ -543,7 +564,9 @@ mark.highlight {
   display: block;
 }
 
-.menu:hover .menubtn, .menu:hover .iobtn, .menu:hover .statsbtn {
+.menu:hover .menubtn,
+.menu:hover .iobtn,
+.menu:hover .statsbtn {
   background-color: #eee;
 }
 
@@ -575,7 +598,8 @@ mark.highlight {
   width: calc(100% - 10px);
 }
 
-.menu-textbox.invalid, .dark .menu-textbox.invalid {
+.menu-textbox.invalid,
+.dark .menu-textbox.invalid {
   color: red;
 }
 
@@ -731,8 +755,61 @@ a {
   color: #00b9fd;
 }
 
-#frontcanvas, #backcanvas {
-    touch-action: none;
+#frontcanvas,
+#backcanvas {
+  touch-action: none;
+}
+
+.placeholder {
+  border: 1px dashed #9f9fda !important;
+  background-color: #edf2f7 !important;
+}
+
+.dragging {
+  z-index: 999;
+}
+
+.dark .dragging>table>tbody>tr {
+  background-color: #252c30;
+}
+
+.dark .placeholder {
+  filter: invert(1);
+}
+
+.column-spacer {
+  top: 0;
+  left: 0;
+  width: calc(100% - 4px);
+  position: absolute;
+  cursor: pointer;
+  user-select: none;
+  height: 100%;
+}
+
+.column-width-handle {
+  top: 0;
+  right: 0;
+  width: 4px;
+  position: absolute;
+  cursor: col-resize;
+  user-select: none;
+  height: 100%;
+}
+
+.column-width-handle:hover {
+  background-color: #4f99bd;
+}
+
+.help-link {
+  border: 1px solid #0278a4;
+  padding-inline: 0.3rem;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.dark .help-link {
+  border: 1px solid #00b9fd;
 }
 
 
@@ -809,11 +886,11 @@ var d={x:c.clientX,y:c.clientY};b.push(d);var e=function(a,b){var c=a.indexOf(b)
 ///////////////////////////////////////////////
 
 ///////////////////////////////////////////////
-var config = {"show_fabrication": false, "redraw_on_drag": true, "highlight_pin1": false, "extra_fields": [], "dark_mode": false, "bom_view": "left-right", "board_rotation": 0, "checkboxes": "Sourced,Placed", "show_silkscreen": true, "show_pads": true, "layer_view": "FB"}
+var config = {"dark_mode": false, "show_pads": true, "show_fabrication": false, "show_silkscreen": true, "highlight_pin1": false, "redraw_on_drag": true, "board_rotation": 0, "checkboxes": "Sourced,Placed", "bom_view": "left-right", "layer_view": "FB", "fields": ["Value", "Footprint"]}
 ///////////////////////////////////////////////
 
 ///////////////////////////////////////////////
-var pcbdata = JSON.parse(LZString.decompressFromBase64("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"))
+var pcbdata = JSON.parse(LZString.decompressFromBase64("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"))
 ///////////////////////////////////////////////
 
 ///////////////////////////////////////////////
@@ -885,53 +962,78 @@ function focusInputField(input) {
   input.select();
 }
 
-function copyToClipboard() {
+function saveBomTable(output) {
   var text = '';
   for (var node of bomhead.childNodes[0].childNodes) {
     if (node.firstChild) {
-      text = text + node.firstChild.nodeValue;
+      text += (output == 'csv' ? `"${node.firstChild.nodeValue}"` : node.firstChild.nodeValue);
     }
     if (node != bomhead.childNodes[0].lastChild) {
-      text += '\t';
+      text += (output == 'csv' ? ',' : '\t');
     }
   }
   text += '\n';
   for (var row of bombody.childNodes) {
     for (var cell of row.childNodes) {
+      let val = '';
       for (var node of cell.childNodes) {
         if (node.nodeName == "INPUT") {
           if (node.checked) {
-            text = text + '✓';
+            val += '✓';
           }
         } else if (node.nodeName == "MARK") {
-          text = text + node.firstChild.nodeValue;
+          val += node.firstChild.nodeValue;
         } else {
-          text = text + node.nodeValue;
+          val += node.nodeValue;
         }
       }
+      if (output == 'csv') {
+        val = val.replace(/\"/g, '\"\"'); // pair of double-quote characters
+        if (isNumeric(val)) {
+          val = +val;                     // use number
+        } else {
+          val = `"${val}"`;               // enclosed within double-quote
+        }
+      }
+      text += val;
       if (cell != row.lastChild) {
-        text += '\t';
+        text += (output == 'csv' ? ',' : '\t');
       }
     }
     text += '\n';
   }
-  var textArea = document.createElement("textarea");
-  textArea.classList.add('clipboard-temp');
-  textArea.value = text;
 
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
+  if (output != 'clipboard') {
+    // To file: csv or txt
+    var blob = new Blob([text], {
+      type: `text/${output}`
+    });
+    saveFile(`${pcbdata.metadata.title}.${output}`, blob);
+  } else {
+    // To clipboard
+    var textArea = document.createElement("textarea");
+    textArea.classList.add('clipboard-temp');
+    textArea.value = text;
 
-  try {
-    if (document.execCommand('copy')) {
-      console.log('Bom copied to clipboard.');
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+      if (document.execCommand('copy')) {
+        console.log('Bom copied to clipboard.');
+      }
+    } catch (err) {
+      console.log('Can not copy to clipboard.');
     }
-  } catch (err) {
-    console.log('Can not copy to clipboard.');
-  }
 
-  document.body.removeChild(textArea);
+    document.body.removeChild(textArea);
+  }
+}
+
+function isNumeric(str) {
+  /* https://stackoverflow.com/a/175787 */
+  return (typeof str != "string" ? false : !isNaN(str) && !isNaN(parseFloat(str)));
 }
 
 function removeGutterNode(node) {
@@ -980,25 +1082,27 @@ var units = {
 
 function initUtils() {
   var allPrefixes = units.prefixes.giga
-                    .concat(units.prefixes.mega)
-                    .concat(units.prefixes.kilo)
-                    .concat(units.prefixes.milli)
-                    .concat(units.prefixes.micro)
-                    .concat(units.prefixes.nano)
-                    .concat(units.prefixes.pico);
+    .concat(units.prefixes.mega)
+    .concat(units.prefixes.kilo)
+    .concat(units.prefixes.milli)
+    .concat(units.prefixes.micro)
+    .concat(units.prefixes.nano)
+    .concat(units.prefixes.pico);
   var allUnits = units.unitsShort.concat(units.unitsLong);
   units.valueRegex = new RegExp("^([0-9\.]+)" +
-                         "\\s*(" + allPrefixes.join("|") + ")?" +
-                         "(" + allUnits.join("|") + ")?" +
-                         "(\\b.*)?$", "");
+    "\\s*(" + allPrefixes.join("|") + ")?" +
+    "(" + allUnits.join("|") + ")?" +
+    "(\\b.*)?$", "");
   units.valueAltRegex = new RegExp("^([0-9]*)" +
-                         "(" + units.unitsShort.join("|") + ")?" +
-                         "([GgMmKkUuNnPp])?" +
-                         "([0-9]*)" +
-                         "(\\b.*)?$", "");
-  for (var bom_type of ["both", "F", "B"]) {
-    for (var row of pcbdata.bom[bom_type]) {
-      row.push(parseValue(row[1], row[3][0][0]));
+    "(" + units.unitsShort.join("|") + ")?" +
+    "([GgMmKkUuNnPp])?" +
+    "([0-9]*)" +
+    "(\\b.*)?$", "");
+  if (config.fields.includes("Value")) {
+    var index = config.fields.indexOf("Value");
+    pcbdata.bom["parsedValues"] = {};
+    for (var id in pcbdata.bom.fields) {
+      pcbdata.bom.parsedValues[id] = parseValue(pcbdata.bom.fields[id][index])
     }
   }
 }
@@ -1142,7 +1246,9 @@ function saveSettings() {
     pcbmetadata: pcbdata.metadata,
     settings: settings,
   }
-  var blob = new Blob([JSON.stringify(data, null, 4)], {type: "application/json"});
+  var blob = new Blob([JSON.stringify(data, null, 4)], {
+    type: "application/json"
+  });
   saveFile(`${pcbdata.metadata.title}.settings.json`, blob);
 }
 
@@ -1158,7 +1264,7 @@ function loadSettings() {
       var newSettings;
       try {
         newSettings = JSON.parse(content);
-      } catch(e) {
+      } catch (e) {
         alert("Selected file is not InteractiveHtmlBom settings file.");
         return;
       }
@@ -1178,10 +1284,10 @@ function loadSettings() {
         var currentMetadata = JSON.stringify(pcbdata.metadata, null, 4);
         var fileMetadata = JSON.stringify(newSettings.pcbmetadata, null, 4);
         if (!confirm(
-          `Settins file metadata does not match current metadata.\n\n` +
-          `Page metadata:\n${currentMetadata}\n\n` +
-          `Settings file metadata:\n${fileMetadata}\n\n` +
-          `Press OK if you would like to import settings anyway.`)) {
+            `Settins file metadata does not match current metadata.\n\n` +
+            `Page metadata:\n${currentMetadata}\n\n` +
+            `Settings file metadata:\n${fileMetadata}\n\n` +
+            `Press OK if you would like to import settings anyway.`)) {
           return;
         }
       }
@@ -1203,7 +1309,7 @@ function overwriteSettings(newSettings) {
   for (var checkbox of settings.checkboxes) {
     writeStorage("checkbox_" + checkbox, settings.checkboxStoredRefs[checkbox]);
   }
-  writeStorage("darkenWhenChecked", settings.darkenWhenChecked);
+  writeStorage("markWhenChecked", settings.markWhenChecked);
   padsVisible(settings.renderPads);
   document.getElementById("padsCheckbox").checked = settings.renderPads;
   fabricationVisible(settings.renderFabrication);
@@ -1226,6 +1332,7 @@ function overwriteSettings(newSettings) {
   document.getElementById("darkmodeCheckbox").checked = settings.darkMode;
   setHighlightPin1(settings.highlightpin1);
   document.getElementById("highlightpin1Checkbox").checked = settings.highlightpin1;
+  showFootprints(settings.show_footprints);
   writeStorage("boardRotation", settings.boardRotation);
   document.getElementById("boardRotation").value = settings.boardRotation / 5;
   document.getElementById("rotationDegree").textContent = settings.boardRotation;
@@ -1243,12 +1350,17 @@ function saveFile(filename, blob) {
 }
 
 function dataURLtoBlob(dataurl) {
-  var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
-      bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
-  while(n--){
-      u8arr[n] = bstr.charCodeAt(n);
+  var arr = dataurl.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
   }
-  return new Blob([u8arr], {type:mime});
+  return new Blob([u8arr], {
+    type: mime
+  });
 }
 
 var settings = {
@@ -1269,6 +1381,8 @@ var settings = {
   renderDnpOutline: false,
   renderTracks: true,
   renderZones: true,
+  columnOrder: [],
+  hiddenColumns: [],
 }
 
 function initDefaults() {
@@ -1297,8 +1411,8 @@ function initDefaults() {
   settings.checkboxes = bomCheckboxes.split(",").filter((e) => e);
   document.getElementById("bomCheckboxes").value = bomCheckboxes;
 
-  settings.darkenWhenChecked = readStorage("darkenWhenChecked") || "";
-  populateDarkenWhenCheckedOptions();
+  settings.markWhenChecked = readStorage("markWhenChecked") || "";
+  populateMarkWhenCheckedOptions();
 
   function initBooleanSetting(storageString, def, elementId, func) {
     var b = readStorage(storageString);
@@ -1328,6 +1442,24 @@ function initDefaults() {
   initBooleanSetting("redrawOnDrag", config.redraw_on_drag, "dragCheckbox", setRedrawOnDrag);
   initBooleanSetting("darkmode", config.dark_mode, "darkmodeCheckbox", setDarkMode);
   initBooleanSetting("highlightpin1", config.highlight_pin1, "highlightpin1Checkbox", setHighlightPin1);
+
+  var fields = ["checkboxes", "References"].concat(config.fields).concat(["Quantity"]);
+  var hcols = JSON.parse(readStorage("hiddenColumns"));
+  if (hcols === null) {
+    hcols = [];
+  }
+  settings.hiddenColumns = hcols.filter(e => fields.includes(e));
+
+  var cord = JSON.parse(readStorage("columnOrder"));
+  if (cord === null) {
+    cord = fields;
+  } else {
+    cord = cord.filter(e => fields.includes(e));
+    if (cord.length != fields.length)
+      cord = fields;
+  }
+  settings.columnOrder = cord;
+
   settings.boardRotation = readStorage("boardRotation");
   if (settings.boardRotation === null) {
     settings.boardRotation = config.board_rotation * 5;
@@ -1362,9 +1494,9 @@ const EventHandler = {
       args: eventArgs,
     }
     var callback;
-    for(callback of this.callbacks[eventType])
+    for (callback of this.callbacks[eventType])
       callback(event);
-    for(callback of this.callbacks[IBOM_EVENT_TYPES.ALL])
+    for (callback of this.callbacks[IBOM_EVENT_TYPES.ALL])
       callback(event);
   }
 }
@@ -1402,6 +1534,11 @@ function drawText(ctx, text, color) {
   ctx.lineWidth = text.thickness;
   if ("svgpath" in text) {
     ctx.stroke(new Path2D(text.svgpath));
+    ctx.restore();
+    return;
+  }
+  if ("polygons" in text) {
+    ctx.fill(getPolygonsPath(text));
     ctx.restore();
     return;
   }
@@ -1486,8 +1623,10 @@ function drawText(ctx, text, color) {
 
 function drawedge(ctx, scalefactor, edge, color) {
   ctx.strokeStyle = color;
+  ctx.fillStyle = color;
   ctx.lineWidth = Math.max(1 / scalefactor, edge.width);
   ctx.lineCap = "round";
+  ctx.lineJoin = "round";
   if ("svgpath" in edge) {
     ctx.stroke(new Path2D(edge.svgpath));
   } else {
@@ -1521,7 +1660,10 @@ function drawedge(ctx, scalefactor, edge, color) {
       ctx.moveTo(...edge.start);
       ctx.bezierCurveTo(...edge.cpa, ...edge.cpb, ...edge.end);
     }
-    ctx.stroke();
+    if("filled" in edge && edge.filled)
+      ctx.fill();
+    else
+      ctx.stroke();
   }
 }
 
@@ -1590,22 +1732,30 @@ function getPolygonsPath(shape) {
   return shape.path2d;
 }
 
-function drawPolygonShape(ctx, shape, color) {
+function drawPolygonShape(ctx, scalefactor, shape, color) {
   ctx.save();
-  ctx.fillStyle = color;
   if (!("svgpath" in shape)) {
     ctx.translate(...shape.pos);
     ctx.rotate(deg2rad(-shape.angle));
   }
-  ctx.fill(getPolygonsPath(shape));
+  if("filled" in shape && !shape.filled) {
+    ctx.strokeStyle = color;
+    ctx.lineWidth = Math.max(1 / scalefactor, shape.width);
+    ctx.lineCap = "round";
+    ctx.lineJoin = "round";
+    ctx.stroke(getPolygonsPath(shape));
+  } else {
+    ctx.fillStyle = color;
+    ctx.fill(getPolygonsPath(shape));
+  }
   ctx.restore();
 }
 
 function drawDrawing(ctx, scalefactor, drawing, color) {
-  if (["segment", "arc", "circle", "curve"].includes(drawing.type)) {
+  if (["segment", "arc", "circle", "curve", "rect"].includes(drawing.type)) {
     drawedge(ctx, scalefactor, drawing, color);
   } else if (drawing.type == "polygon") {
-    drawPolygonShape(ctx, drawing, color);
+    drawPolygonShape(ctx, scalefactor, drawing, color);
   } else {
     drawText(ctx, drawing, color);
   }
@@ -1642,7 +1792,7 @@ function getCachedPadPath(pad) {
 function drawPad(ctx, pad, color, outline) {
   ctx.save();
   ctx.translate(...pad.pos);
-  ctx.rotate(deg2rad(pad.angle));
+  ctx.rotate(-deg2rad(pad.angle));
   if (pad.offset) {
     ctx.translate(...pad.offset);
   }
@@ -1661,7 +1811,7 @@ function drawPadHole(ctx, pad, padHoleColor) {
   if (pad.type != "th") return;
   ctx.save();
   ctx.translate(...pad.pos);
-  ctx.rotate(deg2rad(pad.angle));
+  ctx.rotate(-deg2rad(pad.angle));
   ctx.fillStyle = padHoleColor;
   if (pad.drillshape == "oblong") {
     ctx.fill(getOblongPath(pad.drillsize));
@@ -1671,7 +1821,7 @@ function drawPadHole(ctx, pad, padHoleColor) {
   ctx.restore();
 }
 
-function drawFootprint(ctx, layer, scalefactor, footprint, padColor, padHoleColor, outlineColor, highlight, outline) {
+function drawFootprint(ctx, layer, scalefactor, footprint, colors, highlight, outline) {
   if (highlight) {
     // draw bounding box
     if (footprint.layer == layer) {
@@ -1680,10 +1830,10 @@ function drawFootprint(ctx, layer, scalefactor, footprint, padColor, padHoleColo
       ctx.translate(...footprint.bbox.pos);
       ctx.rotate(deg2rad(-footprint.bbox.angle));
       ctx.translate(...footprint.bbox.relpos);
-      ctx.fillStyle = padColor;
+      ctx.fillStyle = colors.pad;
       ctx.fillRect(0, 0, ...footprint.bbox.size);
       ctx.globalAlpha = 1;
-      ctx.strokeStyle = padColor;
+      ctx.strokeStyle = colors.pad;
       ctx.strokeRect(0, 0, ...footprint.bbox.size);
       ctx.restore();
     }
@@ -1691,21 +1841,21 @@ function drawFootprint(ctx, layer, scalefactor, footprint, padColor, padHoleColo
   // draw drawings
   for (var drawing of footprint.drawings) {
     if (drawing.layer == layer) {
-      drawDrawing(ctx, scalefactor, drawing.drawing, padColor);
+      drawDrawing(ctx, scalefactor, drawing.drawing, colors.pad);
     }
   }
   // draw pads
   if (settings.renderPads) {
     for (var pad of footprint.pads) {
       if (pad.layers.includes(layer)) {
-        drawPad(ctx, pad, padColor, outline);
+        drawPad(ctx, pad, colors.pad, outline);
         if (pad.pin1 && settings.highlightpin1) {
-          drawPad(ctx, pad, outlineColor, true);
+          drawPad(ctx, pad, colors.outline, true);
         }
       }
     }
     for (var pad of footprint.pads) {
-      drawPadHole(ctx, pad, padHoleColor);
+      drawPadHole(ctx, pad, colors.padHole);
     }
   }
 }
@@ -1714,7 +1864,7 @@ function drawEdgeCuts(canvas, scalefactor) {
   var ctx = canvas.getContext("2d");
   var edgecolor = getComputedStyle(topmostdiv).getPropertyValue('--pcb-edge-color');
   for (var edge of pcbdata.edges) {
-    drawedge(ctx, scalefactor, edge, edgecolor);
+    drawDrawing(ctx, scalefactor, edge, edgecolor);
   }
 }
 
@@ -1722,18 +1872,32 @@ function drawFootprints(canvas, layer, scalefactor, highlight) {
   var ctx = canvas.getContext("2d");
   ctx.lineWidth = 3 / scalefactor;
   var style = getComputedStyle(topmostdiv);
-  var padColor = style.getPropertyValue('--pad-color');
-  var padHoleColor = style.getPropertyValue('--pad-hole-color');
-  var outlineColor = style.getPropertyValue('--pin1-outline-color');
-  if (highlight) {
-    padColor = style.getPropertyValue('--pad-color-highlight');
-    outlineColor = style.getPropertyValue('--pin1-outline-color-highlight');
+
+  var colors = {
+    pad: style.getPropertyValue('--pad-color'),
+    padHole: style.getPropertyValue('--pad-hole-color'),
+    outline: style.getPropertyValue('--pin1-outline-color'),
   }
+
   for (var i = 0; i < pcbdata.footprints.length; i++) {
     var mod = pcbdata.footprints[i];
     var outline = settings.renderDnpOutline && pcbdata.bom.skipped.includes(i);
-    if (!highlight || highlightedFootprints.includes(i)) {
-      drawFootprint(ctx, layer, scalefactor, mod, padColor, padHoleColor, outlineColor, highlight, outline);
+    var h = highlightedFootprints.includes(i);
+    var d = markedFootprints.has(i);
+    if (highlight) {
+      if(h && d) {
+        colors.pad = style.getPropertyValue('--pad-color-highlight-both');
+        colors.outline = style.getPropertyValue('--pin1-outline-color-highlight-both');
+      } else if (h) {
+        colors.pad = style.getPropertyValue('--pad-color-highlight');
+        colors.outline = style.getPropertyValue('--pin1-outline-color-highlight');
+      } else if (d) {
+        colors.pad = style.getPropertyValue('--pad-color-highlight-marked');
+        colors.outline = style.getPropertyValue('--pin1-outline-color-highlight-marked');
+      }
+    }
+    if( h || d || !highlight) {
+      drawFootprint(ctx, layer, scalefactor, mod, colors, highlight, outline);
     }
   }
 }
@@ -1744,7 +1908,7 @@ function drawBgLayer(layername, canvas, layer, scalefactor, edgeColor, polygonCo
     if (["segment", "arc", "circle", "curve", "rect"].includes(d.type)) {
       drawedge(ctx, scalefactor, d, edgeColor);
     } else if (d.type == "polygon") {
-      drawPolygonShape(ctx, d, polygonColor);
+      drawPolygonShape(ctx, scalefactor, d, polygonColor);
     } else {
       drawText(ctx, d, textColor);
     }
@@ -1755,16 +1919,16 @@ function drawTracks(canvas, layer, color, highlight) {
   ctx = canvas.getContext("2d");
   ctx.strokeStyle = color;
   ctx.lineCap = "round";
-  for(var track of pcbdata.tracks[layer]) {
+  for (var track of pcbdata.tracks[layer]) {
     if (highlight && highlightedNet != track.net) continue;
     ctx.lineWidth = track.width;
     ctx.beginPath();
     if ('radius' in track) {
       ctx.arc(
-          ...track.center,
-          track.radius,
-          deg2rad(track.startangle),
-          deg2rad(track.endangle));
+        ...track.center,
+        track.radius,
+        deg2rad(track.startangle),
+        deg2rad(track.endangle));
     } else {
       ctx.moveTo(...track.start);
       ctx.lineTo(...track.end);
@@ -1778,7 +1942,7 @@ function drawZones(canvas, layer, color, highlight) {
   ctx.strokeStyle = color;
   ctx.fillStyle = color;
   ctx.lineJoin = "round";
-  for(var zone of pcbdata.zones[layer]) {
+  for (var zone of pcbdata.zones[layer]) {
     if (!zone.path2d) {
       zone.path2d = getPolygonsPath(zone);
     }
@@ -1799,7 +1963,8 @@ function clearCanvas(canvas, color = null) {
     ctx.fillStyle = color;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   } else {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    if (!window.matchMedia("print").matches)
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
   }
   ctx.restore();
 }
@@ -1842,7 +2007,7 @@ function drawHighlightsOnLayer(canvasdict, clear = true) {
   if (clear) {
     clearCanvas(canvasdict.highlight);
   }
-  if (highlightedFootprints.length > 0) {
+  if (markedFootprints.size > 0 || highlightedFootprints.length > 0) {
     drawFootprints(canvasdict.highlight, canvasdict.layer,
       canvasdict.transform.s * canvasdict.transform.zoom, true);
   }
@@ -1867,7 +2032,7 @@ function drawBackground(canvasdict, clear = true) {
   drawFootprints(canvasdict.bg, canvasdict.layer,
     canvasdict.transform.s * canvasdict.transform.zoom, false);
 
-  drawEdgeCuts(canvasdict.bg, canvasdict.transform.s);
+  drawEdgeCuts(canvasdict.bg, canvasdict.transform.s * canvasdict.transform.zoom);
 
   var style = getComputedStyle(topmostdiv);
   var edgeColor = style.getPropertyValue('--silkscreen-edge-color');
@@ -1893,7 +2058,6 @@ function drawBackground(canvasdict, clear = true) {
 function prepareCanvas(canvas, flip, transform) {
   var ctx = canvas.getContext("2d");
   ctx.setTransform(1, 0, 0, 1, 0, 0);
-  var fontsize = 1.55;
   ctx.scale(transform.zoom, transform.zoom);
   ctx.translate(transform.panx, transform.pany);
   if (flip) {
@@ -2016,14 +2180,14 @@ function pointWithinDistanceToSegment(x, y, x1, y1, x2, y2, d) {
 }
 
 function modulo(n, mod) {
-  return ((n % mod) + mod ) % mod;
+  return ((n % mod) + mod) % mod;
 }
 
 function pointWithinDistanceToArc(x, y, xc, yc, radius, startangle, endangle, d) {
   var dx = x - xc;
   var dy = y - yc;
   var r_sq = dx * dx + dy * dy;
-  var rmin = Math.max(0, radius-d);
+  var rmin = Math.max(0, radius - d);
   var rmax = radius + d;
 
   if (r_sq < rmin * rmin || r_sq > rmax * rmax)
@@ -2050,7 +2214,7 @@ function pointWithinDistanceToArc(x, y, xc, yc, radius, startangle, endangle, d)
 
 function pointWithinPad(x, y, pad) {
   var v = [x - pad.pos[0], y - pad.pos[1]];
-  v = rotateVector(v, -pad.angle);
+  v = rotateVector(v, pad.angle);
   if (pad.offset) {
     v[0] -= pad.offset[0];
     v[1] -= pad.offset[1];
@@ -2061,7 +2225,7 @@ function pointWithinPad(x, y, pad) {
 function netHitScan(layer, x, y) {
   // Check track segments
   if (settings.renderTracks && pcbdata.tracks) {
-    for(var track of pcbdata.tracks[layer]) {
+    for (var track of pcbdata.tracks[layer]) {
       if ('radius' in track) {
         if (pointWithinDistanceToArc(x, y, ...track.center, track.radius, track.startangle, track.endangle, track.width / 2)) {
           return track.net;
@@ -2076,7 +2240,7 @@ function netHitScan(layer, x, y) {
   // Check pads
   if (settings.renderPads) {
     for (var footprint of pcbdata.footprints) {
-      for(var pad of footprint.pads) {
+      for (var pad of footprint.pads) {
         if (pad.layers.includes(layer) && pointWithinPad(x, y, pad)) {
           return pad.net;
         }
@@ -2090,7 +2254,7 @@ function pointWithinFootprintBbox(x, y, bbox) {
   var v = [x - bbox.pos[0], y - bbox.pos[1]];
   v = rotateVector(v, bbox.angle);
   return bbox.relpos[0] <= v[0] && v[0] <= bbox.relpos[0] + bbox.size[0] &&
-         bbox.relpos[1] <= v[1] && v[1] <= bbox.relpos[1] + bbox.size[1];
+    bbox.relpos[1] <= v[1] && v[1] <= bbox.relpos[1] + bbox.size[1];
 }
 
 function bboxHitScan(layer, x, y) {
@@ -2250,9 +2414,9 @@ function handlePointerMove(e, layerdict) {
     var otherPtr = Object.values(layerdict.pointerStates).filter((ptr) => ptr != thisPtr)[0];
 
     var oldDist = Math.sqrt(Math.pow(thisPtr.lastX - otherPtr.lastX, 2) + Math.pow(thisPtr.lastY - otherPtr.lastY, 2));
-    var newDist = Math.sqrt(Math.pow(e.offsetX - otherPtr.lastX, 2)     + Math.pow(e.offsetY - otherPtr.lastY, 2));
+    var newDist = Math.sqrt(Math.pow(e.offsetX - otherPtr.lastX, 2) + Math.pow(e.offsetY - otherPtr.lastY, 2));
 
-    var scaleFactor = newDist/oldDist;
+    var scaleFactor = newDist / oldDist;
 
     if (scaleFactor != NaN) {
       layerdict.transform.zoom *= scaleFactor;
@@ -2379,6 +2543,381 @@ function initRender() {
 ///////////////////////////////////////////////
 
 ///////////////////////////////////////////////
+/*
+ * Table reordering via Drag'n'Drop
+ * Inspired by: https://htmldom.dev/drag-and-drop-table-column
+ */
+
+function setBomHandlers() {
+
+  const bom = document.getElementById('bomtable');
+
+  let dragName;
+  let placeHolderElements;
+  let draggingElement;
+  let forcePopulation;
+  let xOffset;
+  let yOffset;
+  let wasDragged;
+
+  const mouseUpHandler = function(e) {
+    // Delete dragging element
+    draggingElement.remove();
+
+    // Make BOM selectable again
+    bom.style.removeProperty("userSelect");
+
+    // Remove listeners
+    document.removeEventListener('mousemove', mouseMoveHandler);
+    document.removeEventListener('mouseup', mouseUpHandler);
+
+    if (wasDragged) {
+      // Redraw whole BOM
+      populateBomTable();
+    }
+  }
+
+  const mouseMoveHandler = function(e) {
+    // Notice the dragging
+    wasDragged = true;
+
+    // Make the dragged element visible
+    draggingElement.style.removeProperty("display");
+
+    // Set elements position to mouse position
+    draggingElement.style.left = `${e.screenX - xOffset}px`;
+    draggingElement.style.top = `${e.screenY - yOffset}px`;
+
+    // Forced redrawing of BOM table
+    if (forcePopulation) {
+      forcePopulation = false;
+      // Copy array
+      phe = Array.from(placeHolderElements);
+      // populate BOM table again
+      populateBomHeader(dragName, phe);
+      populateBomBody(dragName, phe);
+    }
+
+    // Set up array of hidden columns
+    var hiddenColumns = Array.from(settings.hiddenColumns);
+    // In the ungrouped mode, quantity don't exist
+    if (settings.bommode === "ungrouped")
+      hiddenColumns.push("Quantity");
+    // If no checkbox fields can be found, we consider them hidden
+    if (settings.checkboxes.length == 0)
+      hiddenColumns.push("checkboxes");
+
+    // Get table headers and group them into checkboxes, extrafields and normal headers
+    const bh = document.getElementById("bomhead");
+    headers = Array.from(bh.querySelectorAll("th"))
+    headers.shift() // numCol is not part of the columnOrder
+    headerGroups = []
+    lastCompoundClass = null;
+    for (i = 0; i < settings.columnOrder.length; i++) {
+      cElem = settings.columnOrder[i];
+      if (hiddenColumns.includes(cElem)) {
+        // Hidden columns appear as a dummy element
+        headerGroups.push([]);
+        continue;
+      }
+      elem = headers.filter(e => getColumnOrderName(e) === cElem)[0];
+      if (elem.classList.contains("bom-checkbox")) {
+        if (lastCompoundClass === "bom-checkbox") {
+          cbGroup = headerGroups.pop();
+          cbGroup.push(elem);
+          headerGroups.push(cbGroup);
+        } else {
+          lastCompoundClass = "bom-checkbox";
+          headerGroups.push([elem])
+        }
+      } else {
+        headerGroups.push([elem])
+      }
+    }
+
+    // Copy settings.columnOrder
+    var columns = Array.from(settings.columnOrder)
+
+    // Set up array with indices of hidden columns
+    var hiddenIndices = hiddenColumns.map(e => settings.columnOrder.indexOf(e));
+    var dragIndex = columns.indexOf(dragName);
+    var swapIndex = dragIndex;
+    var swapDone = false;
+
+    // Check if the current dragged element is swapable with the left or right element
+    if (dragIndex > 0) {
+      // Get left headers boundingbox
+      swapIndex = dragIndex - 1;
+      while (hiddenIndices.includes(swapIndex) && swapIndex > 0)
+        swapIndex--;
+      if (!hiddenIndices.includes(swapIndex)) {
+        box = getBoundingClientRectFromMultiple(headerGroups[swapIndex]);
+        if (e.clientX < box.left + window.scrollX + (box.width / 2)) {
+          swapElement = columns[dragIndex];
+          columns.splice(dragIndex, 1);
+          columns.splice(swapIndex, 0, swapElement);
+          forcePopulation = true;
+          swapDone = true;
+        }
+      }
+    }
+    if ((!swapDone) && dragIndex < headerGroups.length - 1) {
+      // Get right headers boundingbox
+      swapIndex = dragIndex + 1;
+      while (hiddenIndices.includes(swapIndex))
+        swapIndex++;
+      if (swapIndex < headerGroups.length) {
+        box = getBoundingClientRectFromMultiple(headerGroups[swapIndex]);
+        if (e.clientX > box.left + window.scrollX + (box.width / 2)) {
+          swapElement = columns[dragIndex];
+          columns.splice(dragIndex, 1);
+          columns.splice(swapIndex, 0, swapElement);
+          forcePopulation = true;
+          swapDone = true;
+        }
+      }
+    }
+
+    // Write back change to storage
+    if (swapDone) {
+      settings.columnOrder = columns
+      writeStorage("columnOrder", JSON.stringify(columns));
+    }
+
+  }
+
+  const mouseDownHandler = function(e) {
+    var target = e.target;
+    if (target.tagName.toLowerCase() != "td")
+      target = target.parentElement;
+
+    // Used to check if a dragging has ever happened
+    wasDragged = false;
+
+    // Create new element which will be displayed as the dragged column
+    draggingElement = document.createElement("div")
+    draggingElement.classList.add("dragging");
+    draggingElement.style.display = "none";
+    draggingElement.style.position = "absolute";
+    draggingElement.style.overflow = "hidden";
+
+    // Get bomhead and bombody elements
+    const bh = document.getElementById("bomhead");
+    const bb = document.getElementById("bombody");
+
+    // Get all compound headers for the current column
+    var compoundHeaders;
+    if (target.classList.contains("bom-checkbox")) {
+      compoundHeaders = Array.from(bh.querySelectorAll("th.bom-checkbox"));
+    } else {
+      compoundHeaders = [target];
+    }
+
+    // Create new table which will display the column
+    var newTable = document.createElement("table");
+    newTable.classList.add("bom");
+    newTable.style.background = "white";
+    draggingElement.append(newTable);
+
+    // Create new header element
+    var newHeader = document.createElement("thead");
+    newTable.append(newHeader);
+
+    // Set up array for storing all placeholder elements
+    placeHolderElements = [];
+
+    // Add all compound headers to the new thead element and placeholders
+    compoundHeaders.forEach(function(h) {
+      clone = cloneElementWithDimensions(h);
+      newHeader.append(clone);
+      placeHolderElements.push(clone);
+    });
+
+    // Create new body element
+    var newBody = document.createElement("tbody");
+    newTable.append(newBody);
+
+    // Get indices for compound headers
+    var idxs = compoundHeaders.map(e => getBomTableHeaderIndex(e));
+
+    // For each row in the BOM body...
+    var rows = bb.querySelectorAll("tr");
+    rows.forEach(function(row) {
+      // ..get the cells for the compound column
+      const tds = row.querySelectorAll("td");
+      var copytds = idxs.map(i => tds[i]);
+      // Add them to the new element and the placeholders
+      var newRow = document.createElement("tr");
+      copytds.forEach(function(td) {
+        clone = cloneElementWithDimensions(td);
+        newRow.append(clone);
+        placeHolderElements.push(clone);
+      });
+      newBody.append(newRow);
+    });
+
+    // Compute width for compound header
+    var width = compoundHeaders.reduce((acc, x) => acc + x.clientWidth, 0);
+    draggingElement.style.width = `${width}px`;
+
+    // Insert the new dragging element and disable selection on BOM
+    bom.insertBefore(draggingElement, null);
+    bom.style.userSelect = "none";
+
+    // Determine the mouse position offset
+    xOffset = e.screenX - compoundHeaders.reduce((acc, x) => Math.min(acc, x.offsetLeft), compoundHeaders[0].offsetLeft);
+    yOffset = e.screenY - compoundHeaders[0].offsetTop;
+
+    // Get name for the column in settings.columnOrder
+    dragName = getColumnOrderName(target);
+
+    // Change text and class for placeholder elements
+    placeHolderElements = placeHolderElements.map(function(e) {
+      newElem = cloneElementWithDimensions(e);
+      newElem.textContent = "";
+      newElem.classList.add("placeholder");
+      return newElem;
+    });
+
+    // On next mouse move, the whole BOM needs to be redrawn to show the placeholders
+    forcePopulation = true;
+
+    // Add listeners for move and up on mouse
+    document.addEventListener('mousemove', mouseMoveHandler);
+    document.addEventListener('mouseup', mouseUpHandler);
+  }
+
+  // In netlist mode, there is nothing to reorder
+  if (settings.bommode === "netlist")
+    return;
+
+  // Add mouseDownHandler to every column except the numCol
+  bom.querySelectorAll("th")
+    .forEach(function(head) {
+      if (!head.classList.contains("numCol")) {
+        head.onmousedown = mouseDownHandler;
+      }
+    });
+
+}
+
+function getBoundingClientRectFromMultiple(elements) {
+  var elems = Array.from(elements);
+
+  if (elems.length == 0)
+    return null;
+
+  var box = elems.shift()
+    .getBoundingClientRect();
+
+  elems.forEach(function(elem) {
+    var elembox = elem.getBoundingClientRect();
+    box.left = Math.min(elembox.left, box.left);
+    box.top = Math.min(elembox.top, box.top);
+    box.width += elembox.width;
+    box.height = Math.max(elembox.height, box.height);
+  });
+
+  return box;
+}
+
+function cloneElementWithDimensions(elem) {
+  var newElem = elem.cloneNode(true);
+  newElem.style.height = window.getComputedStyle(elem).height;
+  newElem.style.width = window.getComputedStyle(elem).width;
+  return newElem;
+}
+
+function getBomTableHeaderIndex(elem) {
+  const bh = document.getElementById('bomhead');
+  const ths = Array.from(bh.querySelectorAll("th"));
+  return ths.indexOf(elem);
+}
+
+function getColumnOrderName(elem) {
+  var cname = elem.getAttribute("col_name");
+  if (cname === "bom-checkbox")
+    return "checkboxes";
+  else
+    return cname;
+}
+
+function resizableGrid(tablehead) {
+  var cols = tablehead.firstElementChild.children;
+  var rowWidth = tablehead.offsetWidth;
+
+  for (var i = 1; i < cols.length; i++) {
+    if (cols[i].classList.contains("bom-checkbox"))
+      continue;
+    cols[i].style.width = ((cols[i].clientWidth - paddingDiff(cols[i])) * 100 / rowWidth) + '%';
+  }
+
+  for (var i = 1; i < cols.length - 1; i++) {
+    var div = document.createElement('div');
+    div.className = "column-width-handle";
+    cols[i].appendChild(div);
+    setListeners(div);
+  }
+
+  function setListeners(div) {
+    var startX, curCol, nxtCol, curColWidth, nxtColWidth, rowWidth;
+
+    div.addEventListener('mousedown', function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+
+      curCol = e.target.parentElement;
+      nxtCol = curCol.nextElementSibling;
+      startX = e.pageX;
+
+      var padding = paddingDiff(curCol);
+
+      rowWidth = curCol.parentElement.offsetWidth;
+      curColWidth = curCol.clientWidth - padding;
+      nxtColWidth = nxtCol.clientWidth - padding;
+    });
+
+    document.addEventListener('mousemove', function(e) {
+      if (startX) {
+        var diffX = e.pageX - startX;
+        diffX = -Math.min(-diffX, curColWidth - 20);
+        diffX = Math.min(diffX, nxtColWidth - 20);
+
+        curCol.style.width = ((curColWidth + diffX) * 100 / rowWidth) + '%';
+        nxtCol.style.width = ((nxtColWidth - diffX) * 100 / rowWidth) + '%';
+        console.log(`${curColWidth + nxtColWidth} ${(curColWidth + diffX) * 100 / rowWidth + (nxtColWidth - diffX) * 100 / rowWidth}`);
+      }
+    });
+
+    document.addEventListener('mouseup', function(e) {
+      curCol = undefined;
+      nxtCol = undefined;
+      startX = undefined;
+      nxtColWidth = undefined;
+      curColWidth = undefined
+    });
+  }
+
+  function paddingDiff(col) {
+
+    if (getStyleVal(col, 'box-sizing') == 'border-box') {
+      return 0;
+    }
+
+    var padLeft = getStyleVal(col, 'padding-left');
+    var padRight = getStyleVal(col, 'padding-right');
+    return (parseInt(padLeft) + parseInt(padRight));
+
+  }
+
+  function getStyleVal(elm, css) {
+    return (window.getComputedStyle(elm, null).getPropertyValue(css))
+  }
+}
+
+///////////////////////////////////////////////
+
+///////////////////////////////////////////////
 /* DOM manipulation and misc code */
 
 var bomsplit;
@@ -2391,6 +2930,7 @@ var currentHighlightedRowId;
 var highlightHandlers = [];
 var footprintIndexToHandler = {};
 var netsToHandler = {};
+var markedFootprints = new Set();
 var highlightedFootprints = [];
 var highlightedNet = null;
 var lastClicked;
@@ -2452,6 +2992,37 @@ function setDarkMode(value) {
   settings.darkMode = value;
   redrawIfInitDone();
 }
+
+function setShowBOMColumn(field, value) {
+  if (field === "references") {
+    var rl = document.getElementById("reflookup");
+    rl.disabled = !value;
+    if (!value) {
+      rl.value = "";
+      updateRefLookup("");
+    }
+  }
+
+  var n = settings.hiddenColumns.indexOf(field);
+  if (value) {
+    if (n != -1) {
+      settings.hiddenColumns.splice(n, 1);
+    }
+  } else {
+    if (n == -1) {
+      settings.hiddenColumns.push(field);
+    }
+  }
+
+  writeStorage("hiddenColumns", JSON.stringify(settings.hiddenColumns));
+
+  if (initDone) {
+    populateBomTable();
+  }
+
+  redrawIfInitDone();
+}
+
 
 function setFullscreen(value) {
   if (value) {
@@ -2531,9 +3102,9 @@ function setBomCheckboxState(checkbox, element, references) {
 }
 
 function createCheckboxChangeHandler(checkbox, references, row) {
-  return function() {
+  return function () {
     refsSet = getStoredCheckboxRefs(checkbox);
-    var darkenWhenChecked = settings.darkenWhenChecked == checkbox;
+    var markWhenChecked = settings.markWhenChecked == checkbox;
     eventArgs = {
       checkbox: checkbox,
       refs: references,
@@ -2543,8 +3114,12 @@ function createCheckboxChangeHandler(checkbox, references, row) {
       for (var ref of references) {
         refsSet.add(ref[1]);
       }
-      if (darkenWhenChecked) {
+      if (markWhenChecked) {
         row.classList.add("checked");
+        for (var ref of references) {
+          markedFootprints.add(ref[1]);
+        }
+        drawHighlights();
       }
       eventArgs.state = 'checked';
     } else {
@@ -2552,8 +3127,12 @@ function createCheckboxChangeHandler(checkbox, references, row) {
       for (var ref of references) {
         refsSet.delete(ref[1]);
       }
-      if (darkenWhenChecked) {
+      if (markWhenChecked) {
         row.classList.remove("checked");
+        for (var ref of references) {
+          markedFootprints.delete(ref[1]);
+        }
+        drawHighlights();
       }
       eventArgs.state = 'unchecked';
     }
@@ -2574,7 +3153,7 @@ function clearHighlightedFootprints() {
 }
 
 function createRowHighlightHandler(rowid, refs, net) {
-  return function() {
+  return function () {
     if (currentHighlightedRowId) {
       if (currentHighlightedRowId == rowid) {
         return;
@@ -2587,12 +3166,11 @@ function createRowHighlightHandler(rowid, refs, net) {
     highlightedNet = net;
     drawHighlights();
     EventHandler.emitEvent(
-      IBOM_EVENT_TYPES.HIGHLIGHT_EVENT,
-      {
-        rowid: rowid,
-        refs: refs,
-        net: net
-      });
+      IBOM_EVENT_TYPES.HIGHLIGHT_EVENT, {
+      rowid: rowid,
+      refs: refs,
+      net: net
+    });
   }
 }
 
@@ -2602,30 +3180,29 @@ function entryMatches(entry) {
     return entry.toLowerCase().indexOf(filter) >= 0;
   }
   // check refs
-  for (var ref of entry[3]) {
-    if (ref[0].toLowerCase().indexOf(filter) >= 0) {
-      return true;
+  if (!settings.hiddenColumns.includes("references")) {
+    for (var ref of entry) {
+      if (ref[0].toLowerCase().indexOf(filter) >= 0) {
+        return true;
+      }
     }
   }
-  // check extra fields
-  for (var i in config.extra_fields) {
-    if (entry[4][i].toLowerCase().indexOf(filter) >= 0) {
-      return true;
+  // check fields
+  for (var i in config.fields) {
+    var f = config.fields[i];
+    if (!settings.hiddenColumns.includes(f)) {
+      for (var ref of entry) {
+        if (pcbdata.bom.fields[ref[1]][i].toLowerCase().indexOf(filter) >= 0) {
+          return true;
+        }
+      }
     }
-  }
-  // check value
-  if (entry[1].toLowerCase().indexOf(filter) >= 0) {
-    return true;
-  }
-  // check footprint
-  if (entry[2].toLowerCase().indexOf(filter) >= 0) {
-    return true;
   }
   return false;
 }
 
 function findRefInEntry(entry) {
-  return entry[3].filter(r => r[0].toLowerCase() == reflookup);
+  return entry.filter(r => r[0].toLowerCase() == reflookup);
 }
 
 function highlightFilter(s) {
@@ -2652,7 +3229,7 @@ function highlightFilter(s) {
 }
 
 function checkboxSetUnsetAllHandler(checkboxname) {
-  return function() {
+  return function () {
     var checkboxnum = 0;
     while (checkboxnum < settings.checkboxes.length &&
       settings.checkboxes[checkboxnum].toLowerCase() != checkboxname.toLowerCase()) {
@@ -2680,28 +3257,34 @@ function checkboxSetUnsetAllHandler(checkboxname) {
   }
 }
 
-function createColumnHeader(name, cls, comparator) {
+function createColumnHeader(name, cls, comparator, is_checkbox = false) {
   var th = document.createElement("TH");
   th.innerHTML = name;
   th.classList.add(cls);
-  th.style.cursor = "pointer";
+  if (is_checkbox)
+    th.setAttribute("col_name", "bom-checkbox");
+  else
+    th.setAttribute("col_name", name);
   var span = document.createElement("SPAN");
   span.classList.add("sortmark");
   span.classList.add("none");
   th.appendChild(span);
-  th.onclick = function() {
-    if (currentSortColumn && this !== currentSortColumn) {
+  var spacer = document.createElement("div");
+  spacer.className = "column-spacer";
+  th.appendChild(spacer);
+  spacer.onclick = function () {
+    if (currentSortColumn && th !== currentSortColumn) {
       // Currently sorted by another column
       currentSortColumn.childNodes[1].classList.remove(currentSortOrder);
       currentSortColumn.childNodes[1].classList.add("none");
       currentSortColumn = null;
       currentSortOrder = null;
     }
-    if (currentSortColumn && this === currentSortColumn) {
+    if (currentSortColumn && th === currentSortColumn) {
       // Already sorted by this column
       if (currentSortOrder == "asc") {
         // Sort by this column, descending order
-        bomSortFunction = function(a, b) {
+        bomSortFunction = function (a, b) {
           return -comparator(a, b);
         }
         currentSortColumn.childNodes[1].classList.remove("asc");
@@ -2718,30 +3301,108 @@ function createColumnHeader(name, cls, comparator) {
     } else {
       // Sort by this column, ascending order
       bomSortFunction = comparator;
-      currentSortColumn = this;
+      currentSortColumn = th;
       currentSortColumn.childNodes[1].classList.remove("none");
       currentSortColumn.childNodes[1].classList.add("asc");
       currentSortOrder = "asc";
     }
     populateBomBody();
   }
+  if (is_checkbox) {
+    spacer.onclick = fancyDblClickHandler(
+      spacer, spacer.onclick, checkboxSetUnsetAllHandler(name));
+  }
   return th;
 }
 
-function populateBomHeader() {
+function populateBomHeader(placeHolderColumn = null, placeHolderElements = null) {
   while (bomhead.firstChild) {
     bomhead.removeChild(bomhead.firstChild);
   }
   var tr = document.createElement("TR");
   var th = document.createElement("TH");
   th.classList.add("numCol");
+
+  var vismenu = document.createElement("div");
+  vismenu.id = "vismenu";
+  vismenu.classList.add("menu");
+
+  var visbutton = document.createElement("div");
+  visbutton.classList.add("visbtn");
+  visbutton.classList.add("hideonprint");
+
+  var viscontent = document.createElement("div");
+  viscontent.classList.add("menu-content");
+  viscontent.id = "vismenu-content";
+
+  settings.columnOrder.forEach(column => {
+    if (typeof column !== "string")
+      return;
+
+    // Skip empty columns
+    if (column === "checkboxes" && settings.checkboxes.length == 0)
+      return;
+    else if (column === "Quantity" && settings.bommode == "ungrouped")
+      return;
+
+    var label = document.createElement("label");
+    label.classList.add("menu-label");
+
+    var input = document.createElement("input");
+    input.classList.add("visibility_checkbox");
+    input.type = "checkbox";
+    input.onchange = function (e) {
+      setShowBOMColumn(column, e.target.checked)
+    };
+    input.checked = !(settings.hiddenColumns.includes(column));
+
+    label.appendChild(input);
+    if (column.length > 0)
+      label.append(column[0].toUpperCase() + column.slice(1));
+
+    viscontent.appendChild(label);
+  });
+
+  viscontent.childNodes[0].classList.add("menu-label-top");
+
+  vismenu.appendChild(visbutton);
+  if (settings.bommode != "netlist") {
+    vismenu.appendChild(viscontent);
+    th.appendChild(vismenu);
+  }
   tr.appendChild(th);
-  var checkboxCompareClosure = function(checkbox) {
+
+  var checkboxCompareClosure = function (checkbox) {
     return (a, b) => {
-      var stateA = getCheckboxState(checkbox, a[3]);
-      var stateB = getCheckboxState(checkbox, b[3]);
+      var stateA = getCheckboxState(checkbox, a);
+      var stateB = getCheckboxState(checkbox, b);
       if (stateA > stateB) return -1;
       if (stateA < stateB) return 1;
+      return 0;
+    }
+  }
+  var stringFieldCompareClosure = function (fieldIndex) {
+    return (a, b) => {
+      var fa = pcbdata.bom.fields[a[0][1]][fieldIndex];
+      var fb = pcbdata.bom.fields[b[0][1]][fieldIndex];
+      if (fa != fb) return fa > fb ? 1 : -1;
+      else return 0;
+    }
+  }
+  var referenceRegex = /(?<prefix>[^0-9]+)(?<number>[0-9]+)/;
+  var compareRefs = (a, b) => {
+    var ra = referenceRegex.exec(a);
+    var rb = referenceRegex.exec(b);
+    if (ra === null || rb === null) {
+      if (a != b) return a > b ? 1 : -1;
+      return 0;
+    } else {
+      if (ra.groups.prefix != rb.groups.prefix) {
+        return ra.groups.prefix > rb.groups.prefix ? 1 : -1;
+      }
+      if (ra.groups.number != rb.groups.number) {
+        return parseInt(ra.groups.number) > parseInt(rb.groups.number) ? 1 : -1;
+      }
       return 0;
     }
   }
@@ -2753,53 +3414,64 @@ function populateBomHeader() {
     });
     tr.appendChild(th);
   } else {
-    for (var checkbox of settings.checkboxes) {
-      th = createColumnHeader(
-        checkbox, "bom-checkbox", checkboxCompareClosure(checkbox));
-      th.onclick = fancyDblClickHandler(
-        th, th.onclick.bind(th), checkboxSetUnsetAllHandler(checkbox));
-      tr.appendChild(th);
-    }
-    tr.appendChild(createColumnHeader("References", "References", (a, b) => {
-      var i = 0;
-      while (i < a[3].length && i < b[3].length) {
-        if (a[3][i] != b[3][i]) return a[3][i] > b[3][i] ? 1 : -1;
-        i++;
-      }
-      return a[3].length - b[3].length;
-    }));
-    // Extra fields
-    if (config.extra_fields.length > 0) {
-      var extraFieldCompareClosure = function(fieldIndex) {
-        return (a, b) => {
-          var fa = a[4][fieldIndex];
-          var fb = b[4][fieldIndex];
-          if (fa != fb) return fa > fb ? 1 : -1;
-          else return 0;
+    // Filter hidden columns
+    var columns = settings.columnOrder.filter(e => !settings.hiddenColumns.includes(e));
+    var valueIndex = config.fields.indexOf("Value");
+    var footprintIndex = config.fields.indexOf("Footprint");
+    columns.forEach((column) => {
+      if (column === placeHolderColumn) {
+        var n = 1;
+        if (column === "checkboxes")
+          n = settings.checkboxes.length;
+        for (i = 0; i < n; i++) {
+          td = placeHolderElements.shift();
+          tr.appendChild(td);
         }
-      }
-      for (var i in config.extra_fields) {
+        return;
+      } else if (column === "checkboxes") {
+        for (var checkbox of settings.checkboxes) {
+          th = createColumnHeader(
+            checkbox, "bom-checkbox", checkboxCompareClosure(checkbox), true);
+          tr.appendChild(th);
+        }
+      } else if (column === "References") {
+        tr.appendChild(createColumnHeader("References", "references", (a, b) => {
+          var i = 0;
+          while (i < a.length && i < b.length) {
+            if (a[i] != b[i]) return compareRefs(a[i][0], b[i][0]);
+            i++;
+          }
+          return a.length - b.length;
+        }));
+      } else if (column === "Value") {
+        tr.appendChild(createColumnHeader("Value", "value", (a, b) => {
+          var ra = a[0][1], rb = b[0][1];
+          return valueCompare(
+            pcbdata.bom.parsedValues[ra], pcbdata.bom.parsedValues[rb],
+            pcbdata.bom.fields[ra][valueIndex], pcbdata.bom.fields[rb][valueIndex]);
+        }));
+        return;
+      } else if (column === "Footprint") {
         tr.appendChild(createColumnHeader(
-          config.extra_fields[i], "extra", extraFieldCompareClosure(i)));
+          "Footprint", "footprint", stringFieldCompareClosure(footprintIndex)));
+      } else if (column === "Quantity" && settings.bommode == "grouped") {
+        tr.appendChild(createColumnHeader("Quantity", "quantity", (a, b) => {
+          return a.length - b.length;
+        }));
+      } else {
+        // Other fields
+        var i = config.fields.indexOf(column);
+        if (i < 0)
+          return;
+        tr.appendChild(createColumnHeader(
+          column, `field${i + 1}`, stringFieldCompareClosure(i)));
       }
-    }
-    tr.appendChild(createColumnHeader("Value", "Value", (a, b) => {
-      return valueCompare(a[5], b[5], a[1], b[1]);
-    }));
-    tr.appendChild(createColumnHeader("Footprint", "Footprint", (a, b) => {
-      if (a[2] != b[2]) return a[2] > b[2] ? 1 : -1;
-      else return 0;
-    }));
-    if (settings.bommode == "grouped") {
-      tr.appendChild(createColumnHeader("Quantity", "Quantity", (a, b) => {
-        return a[3].length - b[3].length;
-      }));
-    }
+    });
   }
   bomhead.appendChild(tr);
 }
 
-function populateBomBody() {
+function populateBomBody(placeholderColumn = null, placeHolderElements = null) {
   while (bom.firstChild) {
     bom.removeChild(bom.firstChild);
   }
@@ -2826,8 +3498,8 @@ function populateBomBody() {
       // expand bom table
       expandedTable = []
       for (var bomentry of bomtable) {
-        for (var ref of bomentry[3]) {
-          expandedTable.push([1, bomentry[1], bomentry[2], [ref], bomentry[4], bomentry[5]]);
+        for (var ref of bomentry) {
+          expandedTable.push([ref]);
         }
       }
       bomtable = expandedTable;
@@ -2861,47 +3533,56 @@ function populateBomBody() {
           continue;
         }
       } else {
-        references = bomentry[3];
+        references = bomentry;
       }
-      // Checkboxes
-      for (var checkbox of settings.checkboxes) {
-        if (checkbox) {
-          td = document.createElement("TD");
-          var input = document.createElement("input");
-          input.type = "checkbox";
-          input.onchange = createCheckboxChangeHandler(checkbox, references, tr);
-          setBomCheckboxState(checkbox, input, references);
-          if (input.checked && settings.darkenWhenChecked == checkbox) {
-            tr.classList.add("checked");
+      // Filter hidden columns
+      var columns = settings.columnOrder.filter(e => !settings.hiddenColumns.includes(e));
+      columns.forEach((column) => {
+        if (column === placeholderColumn) {
+          var n = 1;
+          if (column === "checkboxes")
+            n = settings.checkboxes.length;
+          for (i = 0; i < n; i++) {
+            td = placeHolderElements.shift();
+            tr.appendChild(td);
           }
-          td.appendChild(input);
+          return;
+        } else if (column === "checkboxes") {
+          for (var checkbox of settings.checkboxes) {
+            if (checkbox) {
+              td = document.createElement("TD");
+              var input = document.createElement("input");
+              input.type = "checkbox";
+              input.onchange = createCheckboxChangeHandler(checkbox, references, tr);
+              setBomCheckboxState(checkbox, input, references);
+              if (input.checked && settings.markWhenChecked == checkbox) {
+                tr.classList.add("checked");
+              }
+              td.appendChild(input);
+              tr.appendChild(td);
+            }
+          }
+        } else if (column === "References") {
+          td = document.createElement("TD");
+          td.innerHTML = highlightFilter(references.map(r => r[0]).join(", "));
+          tr.appendChild(td);
+        } else if (column === "Quantity" && settings.bommode == "grouped") {
+          // Quantity
+          td = document.createElement("TD");
+          td.textContent = references.length;
+          tr.appendChild(td);
+        } else {
+          // All the other fields
+          var field_index = config.fields.indexOf(column)
+          if (field_index < 0)
+            return;
+          var valueSet = new Set();
+          references.map(r => r[1]).forEach((id) => valueSet.add(pcbdata.bom.fields[id][field_index]));
+          td = document.createElement("TD");
+          td.innerHTML = highlightFilter(Array.from(valueSet).join(", "));
           tr.appendChild(td);
         }
-      }
-      // References
-      td = document.createElement("TD");
-      td.innerHTML = highlightFilter(references.map(r => r[0]).join(", "));
-      tr.appendChild(td);
-      // Extra fields
-      for (var i in config.extra_fields) {
-        td = document.createElement("TD");
-        td.innerHTML = highlightFilter(bomentry[4][i]);
-        tr.appendChild(td);
-      }
-      // Value
-      td = document.createElement("TD");
-      td.innerHTML = highlightFilter(bomentry[1]);
-      tr.appendChild(td);
-      // Footprint
-      td = document.createElement("TD");
-      td.innerHTML = highlightFilter(bomentry[2]);
-      tr.appendChild(td);
-      if (settings.bommode == "grouped") {
-        // Quantity
-        td = document.createElement("TD");
-        td.textContent = bomentry[3].length;
-        tr.appendChild(td);
-      }
+      });
     }
     bom.appendChild(tr);
     var handler = createRowHighlightHandler(tr.id, references, netname);
@@ -2924,13 +3605,12 @@ function populateBomBody() {
     }
   }
   EventHandler.emitEvent(
-    IBOM_EVENT_TYPES.BOM_BODY_CHANGE_EVENT,
-    {
-      filter: filter,
-      reflookup: reflookup,
-      checkboxes: settings.checkboxes,
-      bommode: settings.bommode,
-    });
+    IBOM_EVENT_TYPES.BOM_BODY_CHANGE_EVENT, {
+    filter: filter,
+    reflookup: reflookup,
+    checkboxes: settings.checkboxes,
+    bommode: settings.bommode,
+  });
 }
 
 function highlightPreviousRow() {
@@ -2974,6 +3654,8 @@ function highlightNextRow() {
 function populateBomTable() {
   populateBomHeader();
   populateBomBody();
+  setBomHandlers();
+  resizableGrid(bomhead);
 }
 
 function footprintsClicked(footprintIndexes) {
@@ -3048,7 +3730,11 @@ function populateMetadata() {
     document.title = pcbdata.metadata.title + " BOM";
   }
   // Calculate board stats
-  var fp_f = 0, fp_b = 0, pads_f = 0, pads_b = 0, pads_th = 0;
+  var fp_f = 0,
+    fp_b = 0,
+    pads_f = 0,
+    pads_b = 0,
+    pads_th = 0;
   for (var i = 0; i < pcbdata.footprints.length; i++) {
     if (pcbdata.bom.skipped.includes(i)) continue;
     var mod = pcbdata.footprints[i];
@@ -3165,16 +3851,28 @@ function changeBomMode(mode) {
   document.getElementById("bom-grouped-btn").classList.remove("depressed");
   document.getElementById("bom-ungrouped-btn").classList.remove("depressed");
   document.getElementById("bom-netlist-btn").classList.remove("depressed");
+  var chkbxs = document.getElementsByClassName("visibility_checkbox");
+
   switch (mode) {
     case 'grouped':
       document.getElementById("bom-grouped-btn").classList.add("depressed");
+      for (var i = 0; i < chkbxs.length; i++) {
+        chkbxs[i].disabled = false;
+      }
       break;
     case 'ungrouped':
       document.getElementById("bom-ungrouped-btn").classList.add("depressed");
+      for (var i = 0; i < chkbxs.length; i++) {
+        chkbxs[i].disabled = false;
+      }
       break;
     case 'netlist':
       document.getElementById("bom-netlist-btn").classList.add("depressed");
+      for (var i = 0; i < chkbxs.length; i++) {
+        chkbxs[i].disabled = true;
+      }
   }
+
   writeStorage("bommode", mode);
   if (mode != settings.bommode) {
     settings.bommode = mode;
@@ -3223,16 +3921,21 @@ function checkBomCheckbox(bomrowid, checkboxname) {
 
 function setBomCheckboxes(value) {
   writeStorage("bomCheckboxes", value);
-  settings.checkboxes = value.split(",").filter((e) => e);
+  settings.checkboxes = value.split(",").map((e) => e.trim()).filter((e) => e);
   prepCheckboxes();
-  populateBomTable();
-  populateDarkenWhenCheckedOptions();
+  populateMarkWhenCheckedOptions();
+  setMarkWhenChecked(settings.markWhenChecked);
 }
 
-function setDarkenWhenChecked(value) {
-  writeStorage("darkenWhenChecked", value);
-  settings.darkenWhenChecked = value;
+function setMarkWhenChecked(value) {
+  writeStorage("markWhenChecked", value);
+  settings.markWhenChecked = value;
+  markedFootprints.clear();
+  for (var ref of (value ? getStoredCheckboxRefs(value) : [])) {
+    markedFootprints.add(ref);
+  }
   populateBomTable();
+  drawHighlights();
 }
 
 function prepCheckboxes() {
@@ -3264,8 +3967,8 @@ function prepCheckboxes() {
   }
 }
 
-function populateDarkenWhenCheckedOptions() {
-  var container = document.getElementById("darkenWhenCheckedContainer");
+function populateMarkWhenCheckedOptions() {
+  var container = document.getElementById("markWhenCheckedContainer");
 
   if (settings.checkboxes.length == 0) {
     container.parentElement.style.display = "none";
@@ -3276,21 +3979,21 @@ function populateDarkenWhenCheckedOptions() {
   container.parentElement.style.display = "inline-block";
 
   function createOption(name, displayName) {
-    var id = "darkenWhenChecked-" + name;
+    var id = "markWhenChecked-" + name;
 
     var div = document.createElement("div");
     div.classList.add("radio-container");
 
     var input = document.createElement("input");
     input.type = "radio";
-    input.name = "darkenWhenChecked";
+    input.name = "markWhenChecked";
     input.value = name;
     input.id = id;
-    input.onchange = () => setDarkenWhenChecked(name);
+    input.onchange = () => setMarkWhenChecked(name);
     div.appendChild(input);
 
     // Preserve the selected element when the checkboxes change
-    if (name == settings.darkenWhenChecked) {
+    if (name == settings.markWhenChecked) {
       input.checked = true;
     }
 
@@ -3316,7 +4019,11 @@ function updateCheckboxStats(checkbox) {
   td.lastChild.innerHTML = checked + "/" + total + " (" + Math.round(percent) + "%)";
 }
 
-document.onkeydown = function(e) {
+function constrain(number, min, max){
+  return Math.min(Math.max(parseInt(number), min), max);
+}
+
+document.onkeydown = function (e) {
   switch (e.key) {
     case "n":
       if (document.activeElement.type == "text") {
@@ -3336,6 +4043,23 @@ document.onkeydown = function(e) {
       highlightNextRow();
       e.preventDefault();
       break;
+    case "ArrowLeft":
+    case "ArrowRight":
+      if (document.activeElement.type != "text"){
+        e.preventDefault();
+        let boardRotationElement = document.getElementById("boardRotation")
+        settings.boardRotation = parseInt(boardRotationElement.value);  // degrees / 5
+        if (e.key == "ArrowLeft"){
+            settings.boardRotation += 3;  // 15 degrees
+        }
+        else{
+            settings.boardRotation -= 3;
+        }
+        settings.boardRotation = constrain(settings.boardRotation, boardRotationElement.min, boardRotationElement.max);
+        boardRotationElement.value = settings.boardRotation
+        setBoardRotation(settings.boardRotation);
+      }
+      break;      
     default:
       break;
   }
@@ -3389,7 +4113,7 @@ function hideNetlistButton() {
   document.getElementById("bom-netlist-btn").style.display = "none";
 }
 
-window.onload = function(e) {
+window.onload = function (e) {
   initUtils();
   initRender();
   initStorage();
@@ -3405,7 +4129,7 @@ window.onload = function(e) {
     hideNetlistButton();
   }
   initDone = true;
-  prepCheckboxes();
+  setBomCheckboxes(document.getElementById("bomCheckboxes").value);
   // Triggers render
   changeBomLayout(settings.bomlayout);
 
@@ -3496,13 +4220,14 @@ window.matchMedia("print").addListener(resizeAll);
                    oninput="setBomCheckboxes(this.value)">
           </label>
           <label class="menu-label">
-            <div style="margin-left: 5px">Darken when checked</div>
-            <div id="darkenWhenCheckedContainer"></div>
+            <div style="margin-left: 5px">Mark when checked</div>
+            <div id="markWhenCheckedContainer"></div>
           </label>
           <label class="menu-label">
             <span class="shameless-plug">
               <span>Created using</span>
               <a id="github-link" target="blank" href="https://github.com/openscopeproject/InteractiveHtmlBom">InteractiveHtmlBom</a>
+              <a target="blank" title="Mouse and keyboard help" href="https://github.com/openscopeproject/InteractiveHtmlBom/wiki/Usage#bom-page-mouse-actions" style="text-decoration: none;"><label class="help-link">?</label></a>
             </span>
           </label>
         </div>
@@ -3610,6 +4335,13 @@ window.matchMedia("print").addListener(resizeAll);
               <button class="savebtn" onclick="loadSettings()">Import</button>
             </div>
           </div>
+          <div class="menu-label">
+            <span style="margin-left: 5px;">Save bom table as</span>
+            <div class="flexbox">
+              <button class="savebtn" onclick="saveBomTable('csv')">csv</button>
+              <button class="savebtn" onclick="saveBomTable('txt')">txt</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3645,11 +4377,11 @@ window.matchMedia("print").addListener(resizeAll);
                oninput="updateFilter(this.value)">
         <div class="button-container hideonprint" style="float: left; margin: 0;">
           <button id="copy" title="Copy bom table to clipboard"
-               onclick="copyToClipboard()"></button>
+               onclick="saveBomTable('clipboard')"></button>
         </div>
       </div>
       <div id="dbg"></div>
-      <table class="bom">
+      <table class="bom" id="bomtable">
         <thead id="bomhead">
         </thead>
         <tbody id="bombody">

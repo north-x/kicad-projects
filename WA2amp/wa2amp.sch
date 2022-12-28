@@ -6,7 +6,7 @@ encoding utf-8
 Sheet 1 1
 Title "Ausgangsverstärker zu\\nWeichenantrieb WA2"
 Date "2022-05-05"
-Rev "0432 -"
+Rev "0434 -"
 Comp "MV"
 Comment1 ""
 Comment2 ""

@@ -1,0 +1,4 @@
+(sym_lib_table
+  (lib (name "base")(type "Legacy")(uri "${KIPRJMOD}/../lib/Library/base.lib")(options "")(descr ""))
+  (lib (name "booster-rescue")(type "Legacy")(uri "${KIPRJMOD}/booster-rescue.lib")(options "")(descr ""))
+)
